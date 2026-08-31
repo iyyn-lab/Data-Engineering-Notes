@@ -29,7 +29,7 @@ To see exactly *what* to learn and *when* to learn it, we use an interactive vis
 
 ---
 
-## 🚀 My Learning Strategy
+## 🚀  Learning Strategy
 1. Start with the **Python** and **SQL** branches on the website.
 2. Master the **Linux** branch (since you need it for server management).
 3. Don't jump into **Big Data (Spark)** until you are very comfortable with Python.
