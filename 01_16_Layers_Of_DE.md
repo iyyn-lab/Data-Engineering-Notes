@@ -1,4 +1,4 @@
-# Data Engineering – 16 Important Layers (Simple Guide)
+# Data Engineering – 16 Important Layers 
 
 > Note:
 > There are more than 16 layers in Data Engineering, but these are the most commonly discussed layers.
