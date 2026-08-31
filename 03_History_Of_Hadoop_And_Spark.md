@@ -235,14 +235,25 @@ Spark introduced a more efficient execution model that could keep reusable data 
 
 Spark quickly became popular because it provided a unified engine for different workloads.
 
-```text
-Apache Spark
-      │
- ┌────┼─────────┬─────────┐
- ↓    ↓         ↓         ↓
 
-SQL Streaming ML Batch
-```
+```text
+                         APACHE SPARK
+                              │
+                 Distributed Processing Engine
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        ↓                     ↓                     ↓
+   Batch Processing      Streaming Processing   Machine Learning
+        │                     │                     │
+        ↓                     ↓                     ↓
+   Spark DataFrames     Structured Streaming      MLlib
+        │                     │                     │
+        └─────────────────────┼─────────────────────┘
+                              ↓
+                         Spark SQL
+                              │
+                              ↓
+                     SQL + DataFrames
 
 Spark offered:
 
