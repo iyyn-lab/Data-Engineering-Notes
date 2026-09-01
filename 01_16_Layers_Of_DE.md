@@ -4,11 +4,11 @@
 > There are more than 16 layers in Data Engineering, but these are the most commonly discussed layers.
 >
 > In real projects, Data Engineers usually work heavily on only a few layers such as:
-> - Data Ingestion
+>
 > - Data Storage
 > - Data Processing
 > - Data Transformation
-> - Data Orchestration / Scheduling
+> - Data  Scheduling
 >
 > The other layers are still important to understand because they are part of the complete data ecosystem.
 
