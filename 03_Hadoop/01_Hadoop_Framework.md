@@ -153,7 +153,7 @@ Pig Latin Script
         ↓
 Pig
         ↓
-Converts to Java/MapReduce
+Converts to Java to MapReduce
         ↓
 Execution
 ```
