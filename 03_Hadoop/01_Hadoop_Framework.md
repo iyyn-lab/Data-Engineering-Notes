@@ -117,7 +117,7 @@ SQL Query
      ↓
 Hive
      ↓
-Converts internally to MapReduce
+Converts internally java to MapReduce
      ↓
 Execution
 ```
