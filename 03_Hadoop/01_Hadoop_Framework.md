@@ -329,7 +329,7 @@ Oozie
 
 These are often called:
 
-> Abstractions on top of MapReduce
+> Abstractions of MapReducer
 
 Without MapReduce, these components cannot perform their core processing.
 
