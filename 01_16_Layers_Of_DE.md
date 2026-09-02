@@ -641,11 +641,10 @@ Final Consumer
 
 In many real-world projects, Data Engineers spend most of their time in:
 
-- Data Ingestion
+
 - Data Storage
 - Data Processing
 - Data Transformation
-- Data Orchestration
 - Data Scheduling
 
 Understanding all 16 layers helps you see the complete picture of a modern data platform, even if your day-to-day work focuses on only a few of them.
