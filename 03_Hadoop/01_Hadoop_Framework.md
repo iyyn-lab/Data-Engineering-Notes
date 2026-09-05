@@ -153,7 +153,7 @@ Pig Latin Script
         ↓
 Pig
         ↓
-Converts to Java to MapReduce
+Converts internally to Java to MapReduce
         ↓
 Execution
 ```
@@ -303,11 +303,11 @@ You want it to run:
 Oozie can schedule it automatically.
 
 ```text
-Hive Query
+Hive Query(Written once)
       ↓
-Oozie Scheduler
+Oozie Scheduler (Set time)
       ↓
-Runs Automatically
+Runs Automatically (Daily/Weekly/Monthly)
 ```
 
 Oozie internally uses Java.
@@ -353,7 +353,7 @@ Characteristics:
 
 ```text
 Hadoop
-   ↓
+   ↓  (Mandatory)
  HBase
 ```
 
@@ -399,20 +399,22 @@ Collect and move data into Hadoop.
 
 Flume can collect data from:
 
-- Log files
-- Folders
-- Web servers
-- Application servers
-- Social media events
-- Streaming event sources
+| Source | Example |
+|---|---|
+| Log Files | Server logs |
+| Folders | Directory data |
+| Web Servers | Apache, Nginx |
+| Application Servers | Tomcat, JBoss |
+| Social Media | Twitter, Facebook events |
+| Streaming Events | Real-time data |
 
 Example:
 
 ```text
 Web Server
-     ↓
+     ↓ (Flume collects)
    Flume
-     ↓
+     ↓ (Moves data)
   Hadoop
 ```
 
@@ -465,7 +467,7 @@ Example:
 ```text
 ATM Transaction
       ↓
-Flume Captures Event
+Flume Captures Event (Only collects data)
 ```
 
 Flume only collects the event.
@@ -483,7 +485,7 @@ ATM Transaction
       ↓
 Immediately Processed
       ↓
-Response Generated
+Response Generated (Instant message)
 ```
 
 This is true stream processing.
@@ -520,21 +522,29 @@ But not:
 
 # Major Hadoop Ecosystem Components
 
-```text
-Hadoop Core
+Hadoop Ecosystem
 │
-├── HDFS
-├── MapReduce
+├── Core Components
+│   ├── HDFS (Storage)
+│   └── MapReduce (Processing)
 │
-├── Hive
-├── Pig
-├── Sqoop
-├── Oozie
-├── HBase
-├── Mahout
-└── Flume
-```
-
+├── Query Engines
+│   ├── Hive (SQL)
+│   └── Pig (Pig Latin)
+│
+├── Data Transfer
+│   ├── Sqoop (RDBMS ↔ Hadoop)
+│   └── Flume (Sources → Hadoop)
+│
+├── Scheduling
+│   └── Oozie
+│
+├── Database
+│   └── HBase (NoSQL)
+│
+└── Machine Learning
+    └── Mahout
+    
 These are some of the most commonly used Hadoop ecosystem components.
 
 ---
