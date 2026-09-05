@@ -363,19 +363,25 @@ When the master receives a write request:
 
 **Question:** If replication requires 3x storage, why not disable it to save costs?
 
-**Answer - Traditional vs Modern Approach:**
+**Answer:** Replication cannot be disabled because data loss recovery is more expensive than maintaining copies.
 
-| Aspect | Traditional Technology | Hadoop (Modern) |
-|--------|------------------------|-----------------|
-| Replication Support | Not supported | Built-in |
-| Software License | Required (paid) | Free |
-| Hardware License | Required (paid) | Free |
-| Cost | 3x higher | One-time cost |
-| Additional Software | Needed for replication | Not needed |
+**Hardware Cost - Both Need to Pay:**
 
-- Replication can't be disabled - data loss recovery is more expensive than maintaining copies
-- Big advantage of Hadoop: Only hardware costs, no software costs
+| Item | Traditional Technology | Hadoop (Modern) |
+|------|------------------------|-----------------|
+| Hardware (Hard disk) | 💰 Required | 💰 Required |
+| Software License | 💰 Paid | 🆓 Free |
+| Replication Software | 💰 Separate purchase | 🆓 Built-in |
+| Additional Software | 💰 Needed | 🆓 Not needed |
+| **Total Cost** | **Hardware + Software = 3x** | **Hardware only = 1x** |
+
+**Key Points:**
+
+- Hardware cost is SAME in both (need storage for replicas)
+- Hadoop saves money on SOFTWARE cost (free, built-in replication)
+- Traditional technology needs separate software for replication (paid)
 - Hadoop handles replication automatically - just attach hard disks
+- Replication cannot be disabled - data loss recovery is more expensive
 
 ### Rack Awareness Algorithm
 
