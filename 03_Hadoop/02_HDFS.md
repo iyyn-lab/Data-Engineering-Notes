@@ -434,8 +434,8 @@ When Hadoop starts, **5 daemon processes** run in the background:
 | JP1 | Name Node | Master daemon |
 | JP2 | Data Node | Slave daemon |
 | JP3 | Secondary Name Node | Checkpointing |
-| JP4 | Job Tracker (H1) / Resource Manager (H2) | MapReduce master |
-| JP5 | Task Tracker (H1) / Node Manager (H2) | MapReduce slave |
+| JP4 | Job Tracker (H1 Version) / Resource Manager (H2 Version) | MapReduce master |
+| JP5 | Task Tracker (H1 Version) / Node Manager (H2 Version) | MapReduce slave |
 
 - Hadoop source code is in Java
 - Each process does a specific job
