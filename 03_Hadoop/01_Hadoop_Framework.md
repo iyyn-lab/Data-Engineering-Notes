@@ -1,5 +1,11 @@
 # Hadoop Ecosystem - Simple Notes
 
+## Framework Diagram
+
+<div align="center">
+  <img src="Hadoop Framework.png" alt="Hadoop Framework" width="800">
+</div>
+
 ## History of Hadoop
 
 ### 2002 - Google File System (GFS)
@@ -522,6 +528,7 @@ But not:
 
 # Major Hadoop Ecosystem Components
 
+```text
 Hadoop Ecosystem
 │
 ├── Core Components
@@ -544,7 +551,8 @@ Hadoop Ecosystem
 │
 └── Machine Learning
     └── Mahout
-    
+```
+
 These are some of the most commonly used Hadoop ecosystem components.
 
 ---
