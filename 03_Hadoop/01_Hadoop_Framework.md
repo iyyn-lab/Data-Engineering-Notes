@@ -1,6 +1,6 @@
 # Hadoop Ecosystem - Simple Notes
 
-## Framework Diagram
+## Complete FlowChart Diagram
 
 <div align="center">
   <img src="Hadoop Framework.png" alt="Hadoop Framework" width="800">
