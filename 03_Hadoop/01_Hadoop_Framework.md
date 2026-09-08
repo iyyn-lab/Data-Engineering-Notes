@@ -522,6 +522,7 @@ But not:
 
 # Major Hadoop Ecosystem Components
 
+```text
 Hadoop Ecosystem
 │
 ├── Core Components
@@ -544,7 +545,8 @@ Hadoop Ecosystem
 │
 └── Machine Learning
     └── Mahout
-    
+```
+
 These are some of the most commonly used Hadoop ecosystem components.
 
 ---
