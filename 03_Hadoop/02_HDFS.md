@@ -88,7 +88,6 @@ When you store a 1 GB file, it goes through NTFS and gets stored on the hard dis
 
 1 GB file → 1 GB / 16 KB = 65,536 blocks
 
-
 So a 1 GB file gets divided into 65,536 small chunks and stored on the hard disk.
 
 The same scenario applies to EXT file system (Linux OS) - Linux OS has a default block size, and files are divided into blocks based on that size.
@@ -449,33 +448,76 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 | Failure Type | Duration | Description |
 |--------------|----------|-------------|
-| Software/Network Failure | Temporary | Machine comes back after troubleshooting |
-| Hardware Failure | Permanent | Machine needs replacement |
+| Software/Network Failure (S/W or N/W) | Temporary | Machine comes back after troubleshooting |
+| Hardware Failure (H/W) | Permanent | Machine needs full replacement |
 
-### Slave Node Failure - Temporary
+**Note:** Both failures can happen to BOTH Slave nodes AND Master nodes.
+
+---
+
+### Slave Node Failure - Temporary (Software/Network Failure)
 
 **Scenario:** 2nd slave node fails after write operation
 
 **What happens:**
 
 1. Master doesn't receive heartbeat from the failed node
-2. Master identifies the failure
-3. If a user requests data, HDFS serves from other nodes (user doesn't know about the failure)
-4. Master tries to recover data by creating new copies on other nodes
-5. This is called **Automatic Failover**
-6. Metadata gets updated when blocks are moved to new locations
+2. Master identifies that 2nd node has failed
+3. If a user requests data, HDFS serves from other nodes
+4. User/Developer doesn't know about the failure
+5. Master tries to recover data by creating new copies on other nodes
+6. This is called **Automatic Failover**
+7. Metadata gets updated when blocks are moved to new locations
 
 **Important Point:**
 
-- Replication is always maintained at the configured level
+- Replication is always maintained at the configured(default) level
 - If one copy fails, master creates another copy on a different node
+- Already existing block's copy will NOT be placed on the same node again
 
-### Slave Node Failure - Permanent
+**Example with b0 and b15:**
+
+- 2nd Slave Node has: b0, b15
+- 2nd Node fails temporarily
+
+- Step 1: Master detects no heartbeat
+- Step 2: Master tries to copy b0 to 3rd node (no copy there)
+- Step 3: b0 copied to 3rd node ✅
+- Step 4: Metadata updated - b0 now on 3rd node
+
+- Step 5: Master tries to copy b15
+- Step 6: But 2nd node recovers (temporary failure)
+- Step 7: Heartbeat comes back
+- Step 8: b15 copy NOT needed - machine is back
+
+**Result:**
+
+- b0 was copied to 3rd node (because 2nd node was down)
+- b15 stayed on 2nd node (machine recovered before copy)
+- 2nd node comes back with b0, b15
+- But master considers 2nd node's b0 as LOCAL FILE (not valid)
+- Master deletes b0 from 2nd node (waste of hard disk space)
+- Why delete b0 from 2nd node?
+- Metadata already updated: b0 is on 1st, 3rd, 4th nodes
+- 2nd node's b0 is no longer part of replication
+- It's just taking up hard disk space
+
+**Important Rule:**
+
+> Even if a node fails TEMPORARILY, treat it as PERMANENT failure and add a new machine immediately. This is a BEST PRACTICE for slave nodes.
+
+---
+
+### Slave Node Failure - Permanent (Hardware Failure)
 
 - Same automated process happens
 - A new machine is added to the cluster
 - Automatic failover creates missing copies on the new machine
-- Best practice: Add a new machine immediately when permanent failure occurs
+- The new copy is placed on a machine that doesn't already have that block
+
+**Best Practice:** Add a new machine immediately when permanent failure occurs.
+
+---
 
 ### Master Node Failure
 
@@ -485,6 +527,85 @@ When Hadoop starts, **5 daemon processes** run in the background:
 - Metadata is on the master
 - All operations stop (read, write, requests)
 - Everything running on Hadoop stops
+- Even read requests cannot be processed
+
+---
+
+### Master Node Failure - Temporary (Software/Network Failure)
+
+- Metadata file is safe on the hard disk
+- Machine is down, so requests cannot be processed
+- But after troubleshooting, machine comes back
+- Metadata is still intact
+- No permanent data loss
+
+**Solution:** Troubleshoot and bring master back online
+
+---
+
+### Master Node Failure - Permanent (Hardware Failure)
+
+- Hard disk fails → Metadata completely crashes
+- Even if new master machine is created, metadata file is lost
+- Without metadata, you don't know:
+  - Which blocks are on which nodes
+  - Where data is located
+- This is CRITICAL!
+
+**Solution:**
+
+- Metadata file must be secured with multiple copies
+- Store metadata copies on different nodes
+- Use backup and recovery systems
+- Keep metadata in safe storage
+
+---
+
+### Write Operation Failure
+
+**Scenario:** Metadata created, client API ready, but node fails during write
+
+Example: b0 needs to go to 2nd node
+
+During write:
+
+- 2nd node machine fails
+
+What happens:
+
+1. Client API detects 2nd node failure
+2. Client API sends acknowledgment to master
+3. Master decides another machine for b0
+4. Master updates metadata
+5. Write does NOT fail
+6. Write only fails if ALL 4 slave machines are down
+
+---
+
+### Read Operation Failure
+
+**Scenario:** Reading data, but copy fails
+
+Reading b0:
+
+- 3 replicas available (1st, 3rd, 4th nodes)
+
+Client API reads from 1st copy
+
+If 2nd copy fails during read:
+
+- Response tells client API: 2nd copy failed
+- Client API tries 3rd copy
+- Client API sends acknowledgment to master
+- Read is successful from 3rd copy
+
+**Key Points:**
+
+- Pipeline is ONLY for write, NOT for read
+- Read is direct from nodes
+- Only ONE copy is read (not all 3)
+
+---
 
 ### High Availability (HA)
 
@@ -494,6 +615,7 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 - No HA support
 - If master fails, wait for troubleshooting and recovery
+- Master must be brought back manually
 
 **Hadoop Version 2:**
 
@@ -508,6 +630,26 @@ When Hadoop starts, **5 daemon processes** run in the background:
 - When failed node recovers, it becomes passive
 - This swap happens continuously
 
+**Name Node Details:**
+
+| Feature | Active Name Node | Passive Name Node |
+|---------|-----------------|-------------------|
+| Role | Master | Standby |
+| Requests | Handles ALL | Handles NONE |
+| Heartbeat | Receives | Receives |
+| Metadata | Writes | Reads (sync) |
+| Status | Active | Silent |
+
+**Rule:**
+
+- You can have 10 name nodes
+- But only 1 is ACTIVE at a time
+- Remaining 9 are PASSIVE
+- If active fails, one passive becomes active
+- Failed active recovers → becomes passive
+
+---
+
 ### Zookeeper - Cluster Coordinator
 
 - Distributed technology
@@ -516,6 +658,43 @@ When Hadoop starts, **5 daemon processes** run in the background:
 - Monitors active and passive name nodes
 - If active name node dies, Zookeeper promotes passive to active
 - Zookeeper itself has HA (if leader fails, a follower becomes leader)
+
+**Zookeeper Setup:**
+
+4-5 Zookeeper nodes:
+
+- ZK-1 → Leader
+- ZK-2 → Follower
+- ZK-3 → Follower
+- ZK-4 → Follower
+
+These 4 nodes together decide:
+
+- Who becomes active name node
+- Who stays passive
+
+If Leader ZK fails:
+
+- Next follower becomes leader immediately
+
+Zookeeper has HA - no problem
+
+---
+
+### Metadata Storage - Where?
+
+| Component | Storage Location |
+|-----------|-----------------|
+| Active Name Node | Writes metadata |
+| Passive Name Node | Reads metadata (sync) |
+| Journal Node | Common shared storage |
+
+**Important:**
+
+- Active and Passive Name Nodes access metadata from Journal Node
+- Journal Node is a common machine
+- Both nodes share this common storage
+- This ensures metadata is always in sync
 
 ---
 
