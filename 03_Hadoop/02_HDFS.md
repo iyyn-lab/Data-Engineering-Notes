@@ -372,7 +372,6 @@ When the master receives a write request:
 | Hardware (Hard disk) | 💰 Required | 💰 Required |
 | Software License | 💰 Paid | 🆓 Free |
 | Replication Software | 💰 Separate purchase | 🆓 Built-in |
-| Additional Software | 💰 Needed | 🆓 Not needed |
 | **Total Cost** | **Hardware + Software = 3x** | **Hardware only = 1x** |
 
 **Key Points:**
