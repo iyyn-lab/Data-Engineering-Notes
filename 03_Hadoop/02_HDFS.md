@@ -446,7 +446,15 @@ When the master receives a write request:
 
 ## Hadoop Daemon Processes
 
-When Hadoop starts, **5 daemon processes** run in the background:
+Hadoop is a process.
+JP-> Java Process 
+
+When Hadoop process starts, **5 daemon processes** run in the background:
+
+**Note:**
+- Secondary Name Node is a dummy node.
+- The Secondary Name Node captures the status of the Name Node.
+
 
 | Process | Name | Responsibility |
 |---------|------|----------------|
@@ -591,7 +599,9 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 ---
 
-### Write Operation Failure
+### During Write Operation Failure
+
+Note: We have already seen what happens after a write operation fails. But we have not seen what happens if a failure occurs during a write operation.
 
 **Scenario:** Metadata created, client API ready, but node fails during write
 
@@ -654,6 +664,9 @@ If 2nd copy fails during read:
 </div>
 
 **Question clients ask:** "Does your cluster have HA?"
+
+High Availaility :
+Even if the master fails, the cluster should keep running. The cluster should NOT stop working.
 
 **Hadoop Version 0 and 1:**
 
