@@ -426,10 +426,14 @@ When the master receives a write request:
 ## Hadoop Daemon Processes
 
 Hadoop is a process.
+JP-> Java Process 
 
 When Hadoop process starts, **5 daemon processes** run in the background:
 
-JP-> Java Process 
+**Note:**
+- Secondary Name Node is a dummy node.
+- The Secondary Name Node captures the status of the Name Node.
+
 
 | Process | Name | Responsibility |
 |---------|------|----------------|
