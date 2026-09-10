@@ -3,7 +3,7 @@
 ## Complete FlowChart Diagram
 
 <div align="center">
-  <img src="Hadoop Framework.png" alt="Hadoop Framework" width="800">
+  <img src="./assets/Hadoop Framework flowchart short version.png" alt="Hadoop Framework" width="800">
 </div>
 
 ## History of Hadoop

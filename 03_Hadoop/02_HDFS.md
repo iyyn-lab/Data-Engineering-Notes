@@ -1,5 +1,8 @@
 # HDFS (Hadoop Distributed File System)
 
+ **Note:**
+- Please refer to the [Figma Board Flowchart](https://www.figma.com/board/Zx1DbLVYWq9bqGGJpoz6e9/Data-Engineering?node-id=0-1&p=f&t=yIizjr1i3Nb50UYJ-0) for the latest visual representations and detailed flowcharts.
+
 ## Introduction to Hadoop
 
 Hadoop is a framework that combines two main projects:
@@ -255,6 +258,10 @@ A standalone machine can host a distributed file system on top of it.
 
 ### Real-World Example
 
+<div align="center">
+  <img src="./assets/hdfs realworld example.png" alt="hdfs realworld example.png" width="800">
+</div>
+
 When you upload a picture to Facebook:
 
 - The picture file is on your local machine (EXT or NTFS file system)
@@ -267,6 +274,10 @@ When you upload a picture to Facebook:
 ---
 
 ## Edge Node Concept
+
+<div align="center">
+  <img src="./assets/hdfs.png" alt="/hdfs" width="800">
+</div>
 
 ### What is an Edge Node?
 
@@ -304,6 +315,11 @@ Many people think the edge node is a Hadoop slave node, but it's not. In real-ti
 ## HDFS Read, Write, and Request Architecture
 
 ### Write Architecture
+
+<div align="center">
+  <img src="./assets/hdfs write request.png" alt="hdfs write request.png" width="800">
+</div>
+
 
 **Scenario:** 1 GB file needs to be written to HDFS from a slave node (for architecture understanding - in real-time, this happens through the edge node).
 
@@ -415,6 +431,11 @@ When the master receives a write request:
 
 ### Heartbeat Communication
 
+<div align="center">
+  <img src="./assets/maste-slave communication.png" alt="maste-slave communication.png" width="800">
+</div>
+
+
 - Master and slaves communicate every 3 seconds
 - This is called **heartbeat**
 - Purpose: To know if each slave is alive
@@ -477,6 +498,10 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 **Example with b0 and b15:**
 
+<div align="center">
+  <img src="./assets/slave temporary failure.png" alt="slave temporary failure" width="800">
+</div>
+
 - 2nd Slave Node has: b0, b15
 - 2nd Node fails temporarily
 
@@ -509,6 +534,10 @@ When Hadoop starts, **5 daemon processes** run in the background:
 ---
 
 ### Slave Node Failure - Permanent (Hardware Failure)
+
+<div align="center">
+  <img src="./assets/slave permanent failure.png" alt="slave permanent failure" width="800">
+</div>
 
 - Same automated process happens
 - A new machine is added to the cluster
@@ -543,6 +572,7 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 ---
 
+
 ### Master Node Failure - Permanent (Hardware Failure)
 
 - Hard disk fails → Metadata completely crashes
@@ -565,7 +595,13 @@ When Hadoop starts, **5 daemon processes** run in the background:
 
 **Scenario:** Metadata created, client API ready, but node fails during write
 
+
+
 Example: b0 needs to go to 2nd node
+
+<div align="center">
+  <img src="./assets/During Write Operation Failure.png" alt="During Write Operation Failure" width="800">
+</div>
 
 During write:
 
@@ -583,6 +619,10 @@ What happens:
 ---
 
 ### Read Operation Failure
+
+<div align="center">
+  <img src="./assets/hdfs read request.png" alt="hdfs read request.png" width="800">
+</div>
 
 **Scenario:** Reading data, but copy fails
 
@@ -608,6 +648,10 @@ If 2nd copy fails during read:
 ---
 
 ### High Availability (HA)
+
+<div align="center">
+  <img src="./assets/ANN,PNN and ZK.png" alt="ANN,PNN and ZK" width="800">
+</div>
 
 **Question clients ask:** "Does your cluster have HA?"
 
