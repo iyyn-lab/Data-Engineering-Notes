@@ -425,7 +425,11 @@ When the master receives a write request:
 
 ## Hadoop Daemon Processes
 
-When Hadoop starts, **5 daemon processes** run in the background:
+Hadoop is a process.
+
+When Hadoop process starts, **5 daemon processes** run in the background:
+
+JP-> Java Process 
 
 | Process | Name | Responsibility |
 |---------|------|----------------|
