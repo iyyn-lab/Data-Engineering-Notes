@@ -691,7 +691,7 @@ Even if the master fails, the cluster should keep running. The cluster should NO
 
 | Feature | Active Name Node | Passive Name Node |
 |---------|-----------------|-------------------|
-| Role | Master | Standby |
+| Role | Master | Slave |
 | Requests | Handles ALL | Handles NONE |
 | Heartbeat | Receives | Receives |
 | Metadata | Writes | Reads (sync) |
