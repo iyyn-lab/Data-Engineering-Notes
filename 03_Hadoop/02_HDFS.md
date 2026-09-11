@@ -376,7 +376,7 @@ When the master receives a write request:
 
 ### Cost Consideration
 
-**Question:** If replication requires 3x storage, why not disable it to save costs?
+**Question:** If replication requires 3GB storage, why not disable it to save costs?
 
 **Answer:** Replication cannot be disabled because data loss recovery is more expensive than maintaining copies.
 
