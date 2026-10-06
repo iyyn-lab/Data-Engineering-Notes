@@ -4,6 +4,24 @@
 
 ---
 
+# MapReduce Agenda
+
+- MapReduce Introduction
+- MapReduce Daemons and Its Architecture
+- MapReduce Program Flow
+- MapReduce Input and Output Formats
+- MapReduce Data Types
+- MapReduce Code Walkthrough
+- MapReduce YARN Architecture
+- MapReduce V1 vs V2
+- MapReduce Project Setup in IDE
+- MapReduce JAR File Creation
+- MapReduce Code Execution in Cluster
+- Input Splits
+- Speculative Execution
+
+---
+
 ## Table of Contents
 
 1. [MapReduce Introduction](#1-mapreduce-introduction)
