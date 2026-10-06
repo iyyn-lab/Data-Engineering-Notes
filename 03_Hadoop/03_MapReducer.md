@@ -509,15 +509,15 @@ In MapReduce, data transfer from the map node to the reducer node happens via **
 
 | Component | Input | Output |
 |-----------|-------|--------|
-| **Mapper (M → 0, 1)** | Input | Output |
-| **Reducer (R → 0, 1)** | Input | Output |
+| **Mapper** | Input(I/P) | Output(O/P) |
+| **Reducer** | Input(I/P) | Output(O/P) |
 
 **Flow:**
 
 1. The mapper's input is **blocks**.
 2. Then the map processes and gives output.
-3. This output (M → 0) goes as reducer input (M 0 → R 1).
-4. Then the reducer (R 0 → HDFS) processes and stores its output in HDFS.
+3. This mapper's output (O/P) goes as reducer input (I/P).
+4. Then the reducer's ouput (0/P → HDFS) processes and stores its output in HDFS.
 
 ### 5.1 Key-Value Pair Format
 
