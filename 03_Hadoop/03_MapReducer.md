@@ -284,7 +284,7 @@ If we want to use MR, data must be **distributed and stored**. That is what we d
 
 > **Q:** "What is the number of mappers based on?"
 >
-> **A:** "Number of blocks" — and this is changeable.
+> **A:** "Default Number of blocks" — and this is changeable.
 > - MapReduce has a property through which we can say that one block can run 2 mappers.
 > - Similarly, we can reduce it.
 > - If there are 2 blocks B0, B1, first rule: 2 blocks means 2 mappers.
