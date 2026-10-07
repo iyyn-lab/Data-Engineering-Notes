@@ -1,4 +1,4 @@
-# MapReduce Agenda
+# MapReduce
 
 > A complete guide to Hadoop's processing engine — architecture, flow, formats, and internals.
 
