@@ -25,7 +25,7 @@
 ## Table of Contents
 
 1. [MapReduce Introduction](#1-mapreduce-introduction)
-2. [Technical Terms to Know About Hadoop](#2-technical-terms-to-know-about-hadoop)
+2. [Technical Terms to Know About MaoReduce](#2-technical-terms-to-know-about-mapreduce)
 3. [Important Questions and Answers](#3-important-questions-and-answers)
 4. [Hadoop Old Version (V1) Job Architecture](#4-hadoop-old-version-v1-job-architecture)
 5. [MapReduce Program Flow](#5-mapreduce-program-flow)
@@ -54,7 +54,7 @@ Hadoop has 2 major components:
 
 ---
 
-## 2. Technical Terms to Know About Hadoop
+## 2. Technical Terms to Know About MapReduce
 
 **MR = MapReduce**
 
@@ -470,7 +470,7 @@ Now we call this the **Map Output**.
 
 - The TaskTracker gets a task assigned by the JobTracker.
 - The JobTracker assigns only **one map task**.
-- So the TaskTracker launches **one JVM** for that one map task.
+- So the TaskTracker launches **two JVM** for that one map task.
 
 **But wait — why launch 2 JVMs?**
 
