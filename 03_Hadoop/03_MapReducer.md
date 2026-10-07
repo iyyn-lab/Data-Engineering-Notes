@@ -1,10 +1,10 @@
-# MapReduce Agenda
+# MapReduce
 
 > A complete guide to Hadoop's processing engine — architecture, flow, formats, and internals.
 
 ---
 
-# MapReduce Agenda
+## MapReduce Agenda
 
 - MapReduce Introduction
 - MapReduce Daemons and Its Architecture
@@ -25,7 +25,7 @@
 ## Table of Contents
 
 1. [MapReduce Introduction](#1-mapreduce-introduction)
-2. [Technical Terms to Know About Hadoop](#2-technical-terms-to-know-about-hadoop)
+2. [Technical Terms to Know About MaoReduce](#2-technical-terms-to-know-about-mapreduce)
 3. [Important Questions and Answers](#3-important-questions-and-answers)
 4. [Hadoop Old Version (V1) Job Architecture](#4-hadoop-old-version-v1-job-architecture)
 5. [MapReduce Program Flow](#5-mapreduce-program-flow)
@@ -54,7 +54,7 @@ Hadoop has 2 major components:
 
 ---
 
-## 2. Technical Terms to Know About Hadoop
+## 2. Technical Terms to Know About MapReduce
 
 **MR = MapReduce**
 
@@ -284,7 +284,7 @@ If we want to use MR, data must be **distributed and stored**. That is what we d
 
 > **Q:** "What is the number of mappers based on?"
 >
-> **A:** "Number of blocks" — and this is changeable.
+> **A:** "Default Number of blocks" — and this is changeable.
 > - MapReduce has a property through which we can say that one block can run 2 mappers.
 > - Similarly, we can reduce it.
 > - If there are 2 blocks B0, B1, first rule: 2 blocks means 2 mappers.
@@ -470,7 +470,7 @@ Now we call this the **Map Output**.
 
 - The TaskTracker gets a task assigned by the JobTracker.
 - The JobTracker assigns only **one map task**.
-- So the TaskTracker launches **one JVM** for that one map task.
+- So the TaskTracker launches **two JVM** for that one map task.
 
 **But wait — why launch 2 JVMs?**
 
