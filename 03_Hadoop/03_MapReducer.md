@@ -219,6 +219,13 @@ If we want to use MR, data must be **distributed and stored**. That is what we d
 
 ## 3. Important Questions and Answers
 
+<div align="center">
+  <img src="./assets/who decided map count.png" alt="who decided map count.png" width="800">
+</div>
+
+
+
+
 ### 3.1 Who decides the map count?
 
 **Two Options:**
