@@ -988,7 +988,7 @@ So wherever you use **key-value pairs** for map and reducer input and output, yo
 
 ---
 
-## MapReduce Code Walkthrough
+## MapReduce Project Setup in IDE
 
 *(Content continues in the next section)*
 
