@@ -13,25 +13,31 @@
 - MapReduce Data Types
 - MapReduce Code Walkthrough
 - MapReduce YARN Architecture
-- MapReduce V1 vs V2
 - MapReduce Project Setup in IDE
 - MapReduce JAR File Creation
-- MapReduce Code Execution in Cluster
 - Input Splits
 - Speculative Execution
+- MapReduce Conclusion
 
 ---
 
 ## Table of Contents
 
 1. [MapReduce Introduction](#1-mapreduce-introduction)
-2. [Technical Terms to Know About MaoReduce](#2-technical-terms-to-know-about-mapreduce)
+2. [Technical Terms to Know About MapReduce](#2-technical-terms-to-know-about-mapreduce)
 3. [Important Questions and Answers](#3-important-questions-and-answers)
 4. [Hadoop Old Version (V1) Job Architecture](#4-hadoop-old-version-v1-job-architecture)
 5. [MapReduce Program Flow](#5-mapreduce-program-flow)
 6. [MapReduce Input and Output Formats](#6-mapreduce-input-and-output-formats)
 7. [MapReduce Input and Output Diagram](#7-mapreduce-input-and-output-diagram)
 8. [DataTypes in MapReduce](#8-datatypes-in-mapreduce)
+9. [MapReduce Project Setup in IDE](#9-mapreduce-project-setup-in-ide)
+10. [MapReduce Code Walkthrough](#10-mapreduce-code-walkthrough)
+11. [MapReduce JAR File Creation](#11-mapreduce-jar-file-creation)
+12. [MapReduce YARN Architecture](#12-mapreduce-yarn-architecture)
+13. [Input Splits](#13-input-splits)
+14. [Speculative Execution](#14-speculative-execution)
+15. [MapReduce Conclusion](#15-mapreduce-conclusion)
 
 ---
 
@@ -988,17 +994,894 @@ So wherever you use **key-value pairs** for map and reducer input and output, yo
 
 ---
 
-## MapReduce Project Setup in IDE
+## 9. MapReduce Project Setup in IDE
 
-*(Content continues in the next section)*
+**Note:** 
+- I will show you how to develop this code and build it — everything on **Windows**.
+- Finally, we will move it to a **Linux server** to run. In offices, they give **Windows laptops**. 
+- Eclipse, Python, Java, and all Big Data / advanced technology development happens on **Windows laptops**. 
+- After development, we build the code and move it to the **server** to run. 
+- Testing happens on the **server** — all servers are **Linux**.
+- Office laptops are **Windows** — development happens there. That is why I am showing it the same way.
+ 
+<div align="center">
+  <img src="./assets/mr-setting-1.png" alt="mr-setting-1.png" width="800">
+</div>
+
+### 9.1 Why Errors Appear in Eclipse (Hadoop Java APIs)
+
+The code shows **many errors** in Eclipse because:
+
+- Eclipse understands **Java code**, but this is **Hadoop's Java code** (Hadoop Java API).
+- The **first 3 imports** are normal Java imports — Eclipse's Java path is already set, so **no error** appears for those, even if there is a Java error.
+- The **next imports** will all show errors because they are **Hadoop Java APIs** — these are **not general APIs**, so errors appear.
+
+To remove these errors, we must give **Hadoop's libraries** to Eclipse.
+
+So we are creating a **`lib` directory** and putting all Hadoop **JAR files / library files** there.
+
+<div align="center">
+  <img src="./assets/mr-setting-2.png" alt="mr-setting-2.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-3.png" alt="mr-setting-3.png" width="800">
+</div>
+
+### 9.2 Real-Time Approach (Maven / SBT(Simple Build Tool))
+
+In real-time, people use **build tools** like **Maven** and **SBT**:
+
+- With build tools, we **don't need to do this manually**.
+- In Maven, we just specify **which Hadoop version we need**, and it will **automatically download all the JARs at runtime**.
+
+---
+ 
+### 9.3 What Libraries Do We Need?
+
+- You must have **untarred the Hadoop tar file**.
+- The libraries we need are inside the **Hadoop installation directories**.
+- If you are writing this program, you **must have installed Hadoop** already.
+
+<div align="center">
+  <img src="./assets/mr-setting-4.png" alt="mr-setting-4.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-5.png" alt="mr-setting-5.png" width="800">
+</div>
+
+---
+### 9.4 Directories
+
+```
+Hadoop tar version directories -> share -> hadoop -> many folders
+```
+
+- Inside every folder, there will be **tar files**.
+- Copy all of them and put them into the **Eclipse directory**.
+- **Very important:** When copying files, there will not only be tar files — there will also be **text files and zip files**.
+- **Ignore those** and copy only the required ones.
+- If you add everything together, it **will not definitely work**. **Note this down.**
+
+<div align="center">
+  <img src="./assets/mr-setting-6.png" alt="mr-setting-6.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-7.png" alt="mr-setting-7.png" width="800">
+</div>
 
 ---
 
-> **Summary:**
-> - MapReduce is a **batch processing framework** and the **engine of Hadoop**.
-> - **Map = Parallelism**, **Reduce = Grouping**.
-> - **Number of blocks = Number of mappers** (default, but changeable).
-> - **Shuffle** sorts and groups by **key**.
-> - **Writables** are used for key-value pairs to enable fast serialization/deserialization.
-> - **Hive, Pig, Sqoop, Oozie** are abstractions over MapReduce — **not alternatives**.
-> - The alternative to MapReduce is **Spark**.
+### 9.5 Still Getting Errors?
+
+The files in `lib` are copied from Hadoop directories. After that, if you **still get errors**, Eclipse is telling you:
+
+> "Use the libraries in the directories — build a path for them."
+
+<div align="center">
+  <img src="./assets/mr-setting-8.png" alt="mr-setting-8.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-9.png" alt="mr-setting-9.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-10.png" alt="mr-setting-10.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-11.png" alt="mr-setting-11.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-12.png" alt="mr-setting-12.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-13.png" alt="mr-setting-13.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-14.png" alt="mr-setting-14.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-15.png" alt="mr-setting-15.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-16.png" alt="mr-setting-16.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-17.png" alt="mr-setting-17.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-setting-18.png" alt="mr-setting-18.png" width="800">
+</div>
+
+## 10. MapReduce Code Walkthrough
+
+<div align="center">
+  <img src="./assets/mapreduce skeleton-1.png" alt="mapreduce skeleton-1.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mapreduce-import expansion-2.png" alt="mapreduce-import expansion-2.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mapreduce-1st class expansion-3.png" alt="mapreduce-1st class expansion-3.png" width="800">
+</div>
+
+### 10.1 Setting Up Libraries in Eclipse (lib Directory)
+
+The `setup`, `map`, and `cleanup` methods are all inside the **Mapper class**.
+
+But we write code only in the **`map` method**. So why do we need `setup`? Let me give an example.
+
+### 10.2 Example: JDBC MapReduce
+
+Suppose you want to write a **JDBC MapReduce** — meaning you want to connect to a **MySQL database**, read the files/tables inside it, and process them.
+
+- You start writing MapReduce, so you **only use the `map` method**.
+- The logic you write inside `map` runs for **every single record**.
+
+### 10.3 How Many Times Does the Map Method Run?
+
+> It depends on your **input records**.
+
+For example, if we have **6 records**, then the logic inside `map` will run **6 times**.
+
+### 10.4 The Problem with JDBC Connections
+
+Imagine you write a **JDBC connection** inside the `map` method:
+
+- That table has **10 records**.
+- Then the connection will be created **10 times**.
+- That means **one record = one connection**.
+
+**This is extremely dangerous in real-time.** Data engineers read **1 million to 2 million records** with **one connection**.
+
+- If 10 records create 10 connections, you are putting **too much weight on MySQL**.
+- The database becomes slow, and your job becomes slow.
+- **The more connections you create, the more you pay.**
+
+### 10.5 The Solution: `setup()` Method
+
+So what do we do?
+
+- `map` runs for **every record**.
+- That is why we use the **`setup` method**.
+
+#### `setup` Method
+
+> **One mapper = one `setup` call (one time only).**
+
+- If 10 maps are running, each mapper can receive **1 million records**.
+- 10 mappers → 10 million records can be read.
+- But **per mapper, `setup` runs only once**.
+- So for 10 mappers, `setup` runs **10 times**.
+
+**Any one-time invocation logic should be written in the `setup` method.** That is the functionality of the `setup` method.
+
+#### `cleanup` Method
+
+> The function you created (like a connection) needs to be **closed** — that is done in `cleanup`.
+
+- `setup` starts **before `map`** — runs **once per map**.
+- `cleanup` runs **after `map` finishes** — runs **once per map**.
+
+#### `run` Method
+
+> The **driver program** related information — meaning our **job's information** — we normally give there.
+
+- Instead of that, we give it in the **`main` method**.
+- So **`run` is not needed for us**.
+
+---
+
+### 10.6 Mapper Class — setup(), map(), cleanup(), run()
+
+The **Mapper class** contains:
+
+| Method | Purpose |
+|--------|---------|
+| `setup()` | One-time initialization per mapper |
+| `map()` | Runs for every record |
+| `cleanup()` | Close resources after map finishes |
+| `run()` | Driver/job information (not needed — use `main`) |
+
+---
+
+<div align="center">
+  <img src="./assets/mapreduce-dataset-4.png" alt="mapreduce-dataset-4.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mapmethod expansion-5.png" alt="mapmethod expansion-5.png" width="800">
+</div>
+
+### 10.7 Reducer Class — Same 4 Methods
+
+The **Reducer class** also has the **same 4 methods**:
+
+- `setup()`
+- `reduce()` (equivalent to map)
+- `cleanup()`
+- `run()`
+
+> The **same definitions apply** to the Reducer class as well.
+
+<div align="center">
+  <img src="./assets/mapreducer-2st class expansion-6.jpeg" alt="mapreducer-2st class expansion-6.jpeg" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/reduceMethod expansion-7.jpeg" alt="reduceMethod expansion-7" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mainMethod expansion-8.jpeg" alt="mainMethod expansion-8" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mainMethod expansion-9.jpeg" alt="mainMethod expansion-9" width="800">
+</div>
+
+### 10.8 Important Notes (context.write & Iterable)
+
+### Note 1: `context` and `context.write()`
+
+- For **both Mapper and Reducer**:
+  - The **final map/reducer output** is stored in the **local file system**.
+  - That is what `context.write()` does — it writes **key-value pairs**.
+  - It acts like an **output collector**.
+
+### Note 2: `Iterable`
+
+For example, consider this list:
+
+```
+[2000, 1000, 3000]
+```
+
+- Iterable will iterate: **2000, 1000, 3000**.
+- You **don't need to iterate record by record** — MapReduce will do it for you.
+- We **don't need to do it manually**.
+- This data type is made **generic as Iterable** so that we can **iterate the values inside the list**.
+
+---
+
+## 11. MapReduce JAR File Creation
+
+<div align="center">
+  <img src="./assets/jarcreation-10.png" alt="jarcreation-10" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-11.png" alt="jarcreation-11" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-12.png" alt="jarcreation-12" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-13.png" alt="jarcreation-13" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-14.png" alt="jarcreation" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-15.png" alt="jarcreation-15" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-16.png" alt="jarcreation-16" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-17.png" alt="jarcreation-17" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-18.png" alt="jarcreation-18" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-19.png" alt="jarcreation-19" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/jarcreation-20.png" alt="jarcreation-20" width="800">
+</div>
+
+- This is how we **build the JAR file**.
+- This **JAR file** is what we will **move to the Linux server and run**.
+
+<div align="center">
+  <img src="./assets/Jarfile-location-linux-server-21.png" alt="Jarfile-location-linux-server-21" width="800">
+</div>
+
+> The JAR file is at the **end of the Home directory**.
+
+---
+
+### 11.1 Starting Hadoop on Linux Server
+
+<div align="center">
+  <img src="./assets/java-process-status-22.png" alt="java-process-status-22" width="800">
+</div>
+
+After changing the Hadoop folder and going inside the Hadoop directories, then changing directories again:
+
+```bash
+cd sbin
+```
+
+Then run the command to **start all Hadoop services**:
+
+```bash
+./start-all.sh
+```
+
+Then again change directories to Hadoop directories to check whether Hadoop is working:
+
+```bash
+jps
+```
+
+- `jps` = **Java Process Status**
+- All **5 daemons** should be running.
+- So you must **start Hadoop first**, and the **JAR file must be ready**.
+
+<div align="center">
+  <img src="./assets/cd-hdp-23.png" alt="cd-hdp-23" width="800">
+</div>
+
+### 11.2 Creating and Uploading Input File to HDFS
+
+Now, prepare the **input file** first locally.
+
+Change directory and give the input command:
+
+```bash
+vi sales.txt
+```
+
+- `vi` = **Visual Editor** in Linux, used to create and edit files.
+
+<div align="center">
+  <img src="./assets/create-input-file-24.png" alt="create-input-file-24" width="800">
+</div>
+
+Then:
+
+- Copy the data from Notepad.
+- Paste it into the sale.txt vi file.
+- **Don't Add a newline at the end.**
+- Save it.
+
+<div align="center">
+  <img src="./assets/6-input-records-25.png" alt="6-input-records-25.png" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/6 records-26.png" alt="6 records-26" width="800">
+</div>
+
+Now, this file must be **put into Hadoop**.
+
+Change to Hadoop directories and run:
+
+```bash
+bin/hadoop dfs -put ~/sales.txt /sales.txt
+```
+
+> The HDFS file can have the **same name or a different name**.
+
+- `~/` = `/home/username/filename` (home path).
+- So now we are **uploading `sales.txt` from local Linux to HDFS**, because this file is the **input for our MapReduce code**.
+
+### Command Breakdown
+
+| Part | Meaning |
+|------|---------|
+| `bin/hadoop dfs` | `dfs` = **Distributed File System** |
+| `-put` | **Upload/Copy** — take a file from local machine and copy it into HDFS |
+| `~/sales.txt` | **Source file** — `~` means your home directory. "Take `sales.txt` from my home directory" |
+| `/sales.txt` | **Destination path inside HDFS** — "Put the file in the main root directory of HDFS and name it `sales.txt`" |
+
+> **Note:** The `/` at the beginning represents the **root of HDFS**, not your local Linux computer.
+
+<div align="center">
+  <img src="./assets/local input file to hdfs input file-27.png" alt="local input file to hdfs input file-27" width="800">
+</div>
+
+---
+
+### 11.3 Running the MapReduce JAR
+
+Now, run the JAR file. Here we use `~/` which equals `/home/username/filename` (home path).
+
+- Give the **input file** that we already uploaded to HDFS.
+- Then `/mr_output` — our output directory — a file will be stored inside it.
+- `/mr_output` means it is a **directory**.
+
+### What is `/mr_output`?
+
+> It is the name of the **output folder** where Hadoop will save the **final result** of your MapReduce program.
+
+- `mr` = **MapReduce**
+- `output` = **the result**
+- The `/` at the beginning means it is located in the **root directory of HDFS** (not your local Linux computer).
+
+<div align="center">
+  <img src="./assets/running-jar-file-28.png" alt="running-jar-file-28" width="800">
+</div>
+
+### Job Execution
+
+Now your MapReduce job starts:
+
+- **MR job starts** and an **MR ID is generated**.
+- **Map 0% → 100%**, then **Reduce 0% → 100%**.
+- This is a **very small file** — one block size in Hadoop 2 is **128 MB**.
+- This is less than that, so **1 block = 1 map**.
+- Similarly, we said in the code that **only 1 reducer** is needed.
+- So the map ran from **0% to 100%** quickly.
+- Similarly, the reducer ran from **0% to 100%** quickly.
+- Now the **job is complete**.
+
+<div align="center">
+  <img src="./assets/mr-job -starts-id-generate-29.png" alt="mr-job -starts-id-generate-29" width="800">
+</div>
+
+###  Understanding the Output (part-r-00000)
+
+Now let's look at the output. I already told you the output will be stored in **HDFS**.
+
+```bash
+bin/hadoop dfs -ls /
+```
+
+- This displays **all directories and files in HDFS**.
+- Among them, our given directories will appear.
+- When you run the command, a file called **SUCCESS** and a file called **`part-r-00000`** will be created.
+- **`part-r-00000`** is where our **output** is.
+
+To display the content:
+
+```bash
+bin/hadoop dfs -cat /mr_output/part-r-00000
+```
+
+### Decoding `part-r-00000`
+
+> This is the **actual result file** produced by your MapReduce job.
+
+| Part | Meaning |
+|------|---------|
+| `part` | A **"part"** of the output. Hadoop splits output into multiple files. |
+| `r` | Stands for **Reducer**. This file was created by a Reducer. (If it was `m`, it would mean **Mapper output**.) |
+| `00000` | The **file number**. Since you have only 1 reducer, there is only 1 file, numbered `00000`. If you had 2 reducers, you would see `part-r-00000` and `part-r-00001`. |
+
+> Now the final output is in **HDFS** — it is **not local**. So I used the HDFS command to **display it to you**.
+
+<div align="center">
+  <img src="./assets/mr-job-running-30.png" alt="mr-job-running-30" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-job-completed-31.png" alt="mr-job-completed-31" width="800">
+</div>
+
+<div align="center">
+  <img src="./assets/mr-final-output-32.png" alt="mr-final-output-32" width="800">
+</div>
+
+---
+
+## 12. MapReduce YARN Architecture 
+
+**Note**: Yet Another Resource Negotiator (YARN)
+
+<div align="center">
+  <img src="./assets/Yarn Architecture.png" alt="Yarn Architecture" width="800">
+</div>
+
+### Hadoop 1
+
+- **YARN did not exist** in Hadoop 1.
+- YARN was introduced in **Hadoop 2**.
+- It is a kind of **cluster manager**.
+
+**Hadoop 1 stack:**
+
+```
+HDFS
+  └── MapReduce
+        └── Hive, Pig, Sqoop, Oozie
+```
+
+### Hadoop Version 2
+
+**Hadoop 2 stack:**
+
+```
+HDFS
+  └── YARN (new layer built on top)
+        └── MapReduce
+              └── Hive, Pig, Sqoop, Oozie
+```
+
+- They built a **new layer called YARN** on top of HDFS.
+- YARN has its **own separate execution model**.
+- On top of YARN, **MapReduce** sits.
+- But it's not only MapReduce — **Spark** and **Storm** can also be deployed on top of YARN.
+- So many technologies similar to MapReduce run on YARN.
+- YARN created a **common execution model**.
+- So whether it's MapReduce, Spark, or Storm — they all use the **same execution model**.
+- The underlying core performance differs — Spark runs Spark's own way, MapReduce runs its own way — but the **execution model is YARN**.
+
+### Why Was YARN Introduced?
+
+They found **problems in MapReduce**, so they decided a **common execution model** was needed — one that would work for **Spark, Storm, and many other technologies**.
+
+### The Problem in Hadoop 1 (Job Tracker & Task Tracker)
+
+- There is a **Job Tracker (JT)** and **Task Trackers (TT)**.
+- The Job Tracker **assigns jobs** to Task Trackers.
+- If a task **fails**, the Job Tracker must check.
+- If a task **succeeds**, the Job Tracker must check.
+
+**Example:**
+
+- **Gowtham** submits a job.
+- **Kumar** submits a job.
+- The **Job Tracker** monitors both jobs, assigns tasks, starts reducers after maps finish — for **both jobs separately**.
+- Now a **Hive request** comes — that also goes through the Job Tracker, because Hive also runs on MapReduce.
+- So the **Job Tracker gets resource pressure** — performance slows down.
+
+### Real-Time Example: CEO & Supervisors
+
+Imagine you are a company owner with **20,000 employees** — a large corporation.
+
+- If all 20,000 employees report **directly to you**, how would it be?
+- That's why companies have a **CEO**, and below the CEO are **supervisors**, and below each supervisor are **10 employees**.
+
+So:
+
+- **3 supervisors**, each with **10 employees** = 30 employees total.
+- They **don't report directly to the CEO**.
+- Each of the 10 employees reports to their **supervisor**.
+- The **3 supervisors** report to the **CEO**.
+
+**Difference:** 30 people reporting vs. 3 people reporting.
+
+- The **CEO's resource pressure is lower**.
+- The **CEO's performance is higher**.
+
+> **That is exactly what YARN does.**
+
+### Master-Slave Architecture Across Technologies
+
+| Technology | Master | Slave |
+|------------|--------|-------|
+| MapReduce | Job Tracker | Task Tracker |
+| Spark | Master | Worker |
+| Storm | Nimbus | Supervisor |
+
+- All of them have a **master-slave architecture**.
+- All of them face the **same problem** — direct resource pressure increases.
+- **YARN helps all of them** by providing a **CEO-supervisor model**.
+
+### Hadoop 2 Daemons
+
+In Hadoop 2, the daemon names changed:
+
+- **Resource Manager** (Master)
+- **Node Manager** (Slave)
+
+> These 2 daemons are **not only for MapReduce** — they also run for **Spark** when Spark is deployed on YARN.
+
+### Is YARN Necessary for Spark?
+
+- **No, it is not compulsory.**
+- For Hadoop, **MapReduce must run on YARN**.
+- But Spark has its **own execution architecture**.
+- Spark can run **without YARN**.
+- Similarly, **Storm can also run without YARN**.
+- But in **real-time Big Data projects**, Spark is **mostly run on YARN**.
+
+<div align="center">
+  <img src="./assets/YARN execution model architecture.png" alt="YARN execution model architecture" width="800">
+</div>
+
+
+### Resource Manager Components
+
+The Resource Manager runs on one machine, and it has **2 components**:
+
+1. **ASM (Application Manager)**
+2. **Scheduler**
+
+Both communicate with each other.
+
+### How YARN Works — Step by Step
+
+1. A user sends a request using **MapReduce + YARN**.
+   - Submitting the same MapReduce code to the Resource Manager is called **YARN** — nothing else.
+2. The request first goes to the **Application Manager**.
+   - Think of ASM as the **CEO**.
+   - The Resource Manager runs on a **master node**.
+   - ASM and Scheduler communicate and decide **how much capacity** this particular user's (Gowtham's) job needs.
+3. Now we need **slave nodes** — let's say **3 slave nodes**.
+   - **Node Manager** daemon runs on them.
+   - Just like Version 1 had **Job Tracker (Master)** and **Task Tracker (Slave)**, Version 2 has **Resource Manager (Master)** and **Node Manager (Slave)**.
+4. Suppose the job's input initially has **no blocks** — actually **b0 has one block** and **b1 has one block**.
+5. ASM does this:
+   - As soon as the request comes, ASM goes to some slave node and **launches an AM (Application Master)**.
+   - This **AM is the supervisor**.
+6. ASM says:
+   > "I cannot handle where the blocks are, how many map tasks to launch, how many reduce tasks to launch — so instead, I will **hire a supervisor**."
+7. The **Application Master (AM)** becomes the **supervisor** — ASM is the **CEO**.
+8. This supervisor is like the **Job Tracker** in MapReduce Version 1.
+9. The AM launches **map tasks** on:
+   - **b0 → Slave 2**
+   - **b1 → Slave 3**
+10. When these 2 tasks finish, **heartbeats** go to the **AM (Application Master)**.
+11. Suppose **Slave 2 fails** suddenly.
+    - The AM checks where the **b0 copy** is available.
+    - This is exactly what the **Job Tracker** also does.
+    - Suppose the **b0 copy is on Slave 7**.
+    - So the AM **relaunches the failed task on Slave 7**.
+    - This is the **Job Tracker architecture**.
+12. Now another user **Kumar** submits a MapReduce job.
+    - ASM again goes to some slave node and **launches another AM**.
+    - This AM works for **Kumar's job**.
+13. These **2 AMs do not interfere** with each other.
+    - **Each AM is like a Job Tracker for one job.**
+14. The **main Job Tracker is ASM**.
+    - The AM does all the Job Tracker work.
+    - **ASM only monitors the AM.**
+15. Suppose the **AM itself crashes**.
+    - Immediately a **report/acknowledgement goes to ASM** — whether the AM succeeded or failed.
+16. If the AM **failed**:
+    - ASM **launches another AM**.
+    - That new AM **relaunches all the tasks**.
+17. This is the **CEO-supervisor concept** that YARN brought in.
+    - This is the **YARN execution model architecture**.
+    - Because it works well, **Spark and Storm run on top of YARN**.
+
+---
+
+## 13. Input Split
+
+<div align="center">
+  <img src="./assets/input-splits.png" alt="input-splits" width="800">
+</div>
+
+### Relationship Between Blocks and Mappers
+
+- **Number of blocks = Number of mappers** — not always.
+- 4 blocks → 4 mappers.
+- 5 blocks → 5 mappers.
+
+> **But:** Number of blocks is **not always equal** to number of mappers.
+> - 4 blocks → 2 mappers possible.
+> - 5 blocks → 1 mapper possible.
+
+**How is this achieved?** Through **Input Split**.
+
+### Input Split Configuration
+
+- Input Split is a **configuration** in **`mapred-site.xml`**.
+- By default:
+  - If your **block size is 64 MB**, then the **split size is also 64 MB**.
+
+### Example: Increasing Mappers
+
+- You want to run **4 mappers** → by default, 4 mappers will be taken.
+- Now the admin says:
+  > "There is a lot of free RAM — use it and create more parallelism."
+- So can we run **8 mappers for 4 blocks**?
+  - **Yes.**
+  - By default: **block size = split size**.
+  - Suppose block size = 64 MB, and 4 blocks are at 64 MB.
+  - This split is called **logical** — it is **not physical**.
+  - It is **completely logical**.
+
+### Changing Split Size
+
+- Can we change the split size from **64 MB to 32 MB**?
+  - **Yes** — one configuration in our MapReduce code.
+- The **physical 64 MB block** becomes:
+  - **64 MB = 32 MB + 32 MB (two logical splits)**
+- So now:
+  - **4 blocks = 8 splits = 8 mappers**
+
+### The Actual Formula
+
+```
+No. of blocks = or ≠ No. of splits = No. of maps
+```
+
+- A block can be:
+  - **equal to** split (64 MB = 64 MB)
+  - **or not equal to** split (64 MB = 32 MB)
+
+> This configuration will be shown when explaining the code.
+
+**Important:**
+> However many splits there are, that many mappers will be created — **this is always equal**.
+
+### Purpose of Input Split
+
+Using Input Split:
+- We can create **more mappers** than blocks.
+- Or create **fewer mappers** than blocks.
+
+### Example: Fewer Splits (Low RAM)
+
+- Suppose RAM is low.
+- You have **2 blocks of 64 MB** (b1, b2).
+- You want to create **only one split**.
+- So you set the split size to **128 MB**.
+- Then the 2 × 64 MB blocks **logically become one 128 MB split**.
+- Whatever splits there are, that many mappers — so **1 split = 1 mapper**.
+- **When RAM is low, we try to reduce parallelism.**
+- **When RAM is high, we try to increase parallelism.**
+
+---
+
+## 14. Speculative Execution
+
+This is a **common terminology** — not only in MapReduce.
+
+<div align="center">
+  <img src="./assets/speculation- execution -job-not-stucked.png" alt="speculation- execution -job-not-stucked" width="800">
+</div>
+
+
+### Scenario
+
+- The Job Tracker has launched **2 tasks**:
+  - **Task Tracker 1 → b0**
+  - **Task Tracker 2 → b1**
+- We have **copies of both blocks on other nodes** too.
+- So **2 copies of b0 and b1** exist.
+- But only **one copy** runs on the Task Tracker.
+
+### Execution Progress
+
+- Both are running.
+- **Both reach 70% completion.**
+- Then the **2nd Task Tracker reaches 99%**.
+- But the **1st Task Tracker is stuck at 80%**.
+- The 1st map execution is **stuck** — it has not failed, just stopped.
+
+### What Happens Next?
+
+- The 2nd Task Tracker goes from **99% → 100%**.
+- But the result only comes when **all map tasks finish** — the reducer completes only then.
+- So the Job Tracker senses:
+  > "This one is stuck. It is getting late."
+- This is called a **speculative problem** — the Job Tracker identifies it.
+
+### Speculative Execution
+
+- The Job Tracker sees that **another copy of b0 exists on another node**.
+- So it **tells that node's Task Tracker to run the same execution**.
+- This duplicate task runs at:
+  - **10% → 20% → 30% → 70% → ...**
+
+### Duplicate Task
+
+- **Yes, a duplicate task runs.**
+- The 1st Task Tracker is still running — but stuck, not failed.
+- So the Job Tracker **does not kill it**.
+- It starts a **3rd Task Tracker** on another node.
+- Suppose the **3rd Task Tracker reaches 90%**.
+- At that moment, the **stuck 1st Task Tracker jumps to 99% and finishes at 100%**.
+- Now the Job Tracker **kills the 3rd Task Tracker** and **considers the 1st Task Tracker's result**.
+
+### If the Stuck One Never Recovers
+
+<div align="center">
+  <img src="./assets/speculative-execution-job-stucked.png" alt="speculative-execution-job-stucked" width="800">
+</div>
+
+- If the stuck 1st Task Tracker **never recovers**,
+- The newly started **3rd Task Tracker completes 99% → 100%**.
+- The Job Tracker **kills the 1st Task Tracker** and **takes the 3rd Task Tracker's completed result**.
+
+> **This is called Speculative Execution.**
+
+### Key Points About Speculative Execution
+
+- Speculative Execution runs a **duplicate task**.
+- But **only one output** comes:
+  - Either from the **stuck one**, or
+  - From the **newly started one**, or
+  - If the stuck one suddenly works, from **that one**.
+- **But the final output is only one** — the other is killed.
+
+### Multiple Stuck Tasks
+
+- Suppose **10 tasks are stuck**.
+- Then **10 speculative executions** will happen.
+- Some people say it is an **advantage**.
+- Some people say it is a **disadvantage**.
+- **It depends on performance.**
+
+> So they decide whether to **enable or disable speculative execution** based on performance.
+
+---
+
+## 15. MapReduce Conclusion
+
+- **MapReduce is that much only** — you don't need to learn anything deeply beyond this.
+- In **Spark**, you can spend all your time.
+- Plus, **interview questions based on MapReduce** are asked today.
+- So **knowing this well is a good thing**.
+
+---
+
+## Quick Reference — Command Cheat Sheet
+
+| Command | Purpose |
+|---------|---------|
+| `cd sbin` | Change to sbin directory |
+| `./start-all.sh` | Start all Hadoop services |
+| `jps` | Java Process Status — check daemons |
+| `vi sales.txt` | Create/edit file in Linux |
+| `bin/hadoop dfs -put ~/sales.txt /sales.txt` | Upload local file to HDFS |
+| `bin/hadoop dfs -ls /` | List all HDFS directories/files |
+| `bin/hadoop dfs -cat /mr_output/part-r-00000` | Display output file content |
+
+---
+
+## Glossary
+
+| Term | Full Form / Meaning |
+|------|---------------------|
+| HDFS | Hadoop Distributed File System |
+| YARN | Yet Another Resource Negotiator |
+| JT | Job Tracker |
+| TT | Task Tracker |
+| RM | Resource Manager |
+| NM | Node Manager |
+| AM | Application Master |
+| ASM | Application Manager |
+| JPS | Java Process Status |
+| MR | MapReduce |
+
+
